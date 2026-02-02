@@ -27,10 +27,11 @@ The following files are in the [`rules/`](rules/) directory and should be symlin
 
 ## Setup
 
-Symlink the rules directory to your Kilo Code rules directory:
+From your kilorules repository directory, run:
 
 ```bash
-ln -sf YOUR_KILORULES_PATH/rules ~/.kilocode/rules
+mkdir -p ~/.kilocode
+ln -sf ./rules ~/.kilocode/rules
 ```
 
 This makes all rule files available to Kilo Code without including this README.
