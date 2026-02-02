@@ -15,9 +15,9 @@ These are personal, experimental, and more assertive rules that supplement share
 
 ## Rule Placement Philosophy
 
-Rules are split between this repository and `~/Repo/copilot-instructions/copilot-instructions.md`:
+Rules are split between this repository and SHARED_INSTRUCTIONS_PATH:
 
-### This Repository (`~/Repos/kilorules/rules/`)
+### This Repository (KILORULES_PATH/rules/)
 
 Contains **personal, experimental, and more assertive** rules:
 
@@ -31,7 +31,7 @@ Contains **personal, experimental, and more assertive** rules:
 - "Be intrusive and question everything" (assertive style)
 - "A task is NOT complete until committed and pushed" (strong opinion)
 
-### Shared Instructions (`~/Repo/copilot-instructions/copilot-instructions.md`)
+### Shared Instructions (SHARED_INSTRUCTIONS_PATH)
 
 Contains **safe, proven, obvious best practices**:
 
@@ -47,6 +47,6 @@ Contains **safe, proven, obvious best practices**:
 
 ## Promotion Process
 
-1. Test experimental rules in `~/Repos/kilorules/rules/` first
-2. Once validated and refined, promote to `~/Repo/copilot-instructions/copilot-instructions.md`
+1. Test experimental rules in KILORULES_PATH/rules/ first
+2. Once validated and refined, promote to SHARED_INSTRUCTIONS_PATH
 3. Remove or de-emphasize the promoted rule in this repository
