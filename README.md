@@ -11,6 +11,44 @@ These rules configure Kilo's AI assistant behavior to match personal preferences
 - `https://github.com/bcgov/copilot-instructions/blob/main/.github/copilot-instructions.md` = Shared team/work standards
 - Together they provide complete context: shared standards + personal preferences
 
+### Rule Placement Philosophy
+
+Rules are split between this repository and shared instructions:
+
+#### This Repository (`rules/`)
+
+Contains **personal, experimental, and more assertive** rules:
+
+- **Personal preferences** - Tone, communication style, workflow expectations
+- **Experimental approaches** - New patterns being tested before wider adoption
+- **Strong opinions** - Assertive rules that may differ from standard practices
+- **Project-specific conventions** - Rules unique to your projects
+
+Examples:
+- "Use conversational, informal tone" (personal preference)
+- "Be intrusive and question everything" (assertive style)
+- "A task is NOT complete until committed and pushed" (strong opinion)
+
+#### Shared Instructions
+
+Contains **safe, proven, obvious best practices**:
+
+- **General coding standards** - Language-agnostic best practices
+- **Documentation guidelines** - Standard markdown, code block formatting
+- **Security patterns** - Established security best practices
+- **Well-established conventions** - Widely-accepted patterns
+
+Examples:
+- "Use 4-space indentation for code blocks in release notes"
+- "Never include personal names in documentation"
+- Standard linting rules, formatting conventions
+
+### Promotion Process
+
+1. Test experimental rules in `rules/` first
+2. Once validated and refined, promote to shared instructions
+3. Remove or de-emphasize the promoted rule in this repository
+
 ## Structure
 
 - [`README.md`](README.md) - This file (for humans, not read by Kilo)
@@ -23,7 +61,6 @@ The following files are in the [`rules/`](rules/) directory:
 - [`rules/workflow.md`](rules/workflow.md) - Git completion requirements and workflow rules
 - [`rules/communication.md`](rules/communication.md) - Communication style and active feedback rules
 - [`rules/documentation.md`](rules/documentation.md) - Markdown formatting and documentation guidelines
-- [`rules/personal-rules.md`](rules/personal-rules.md) - Repository overview and philosophy
 
 ## Setup
 
@@ -59,4 +96,3 @@ Edit files in `rules/` to match your preferences. Key sections:
 - **Code Completion Requirements** - Workflow enforcement (rules/workflow.md)
 - **Communication Style** - How AI should interact (rules/communication.md)
 - **Documentation Guidelines** - Markdown formatting (rules/documentation.md)
-- **Rule Placement Philosophy** - How to organize rules (rules/personal-rules.md)
