@@ -7,8 +7,19 @@
 #   COPILOT_INSTRUCTIONS_DIR: Path to external copilot-instructions repository
 #                            (default: ../copilot-instructions relative to script)
 #
+# Requirements:
+#   - Bash 4.0+ (for ${var^} parameter expansion)
+#   - On macOS, install via: brew install bash
+#
 
 set -e
+
+# Check bash version (require 4.0+ for ${var^} capitalization)
+if ((BASH_VERSINFO[0] < 4)); then
+    echo "Error: This script requires bash 4.0 or later (current: ${BASH_VERSION})" >&2
+    echo "On macOS, install via: brew install bash" >&2
+    exit 1
+fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUTPUT_FILE="${HOME}/.copilot.md"
@@ -49,8 +60,6 @@ fi
         echo ""
     else
         echo "Warning: External file not found at $EXTERNAL_FILE" >&2
-        echo "---"
-        echo ""
     fi
 
     # Local rules from rules/ directory
@@ -60,7 +69,9 @@ fi
         if [[ -f "${LOCAL_RULES_DIR}/${rule}.md" ]]; then
             echo "### ${rule^} Rules"
             echo ""
-            tail -n +2 "${LOCAL_RULES_DIR}/${rule}.md"  # Skip the # Title line
+            # Skip the first markdown title line (format: "# Title")
+            # This assumes each rule file starts with a level-1 heading on line 1
+            awk 'NR > 1' "${LOCAL_RULES_DIR}/${rule}.md"
             echo ""
         else
             echo "Warning: Local rule not found at ${LOCAL_RULES_DIR}/${rule}.md" >&2

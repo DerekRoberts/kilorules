@@ -103,6 +103,10 @@ Edit files in `rules/` to match your preferences. Key sections:
 This repository includes a script to generate a single `~/.copilot.md` file that aggregates all rules for easy use in new terminal sessions:
 
 ```bash
+# Ensure the script is executable (if needed)
+chmod +x generate-copilot-instructions.sh
+
+# Run the generator
 ./generate-copilot-instructions.sh
 ```
 
