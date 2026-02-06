@@ -59,9 +59,7 @@ Examples:
 The following files are in the [`rules/`](rules/) directory:
 
 - [`rules/developer-profile.md`](rules/developer-profile.md) - Developer role, preferences, and working style
-- [`rules/ai-behavior.md`](rules/ai-behavior.md) - AI communication style and assertive feedback behavior
-- [`rules/formatting.md`](rules/formatting.md) - Markdown formatting and privacy guidelines
-- [`rules/workflow.md`](rules/workflow.md) - Git completion requirements and workflow rules
+- [`rules/ai-behavior.md`](rules/ai-behavior.md) - AI communication style and assertive feedback behavior (experimental)
 
 ## Setup
 
@@ -96,5 +94,11 @@ Edit files in `rules/` to match your preferences. Key sections:
 
 - **Developer Profile** - Your role, preferences, and working style ([`rules/developer-profile.md`](rules/developer-profile.md))
 - **AI Behavior** - How AI should communicate and provide feedback ([`rules/ai-behavior.md`](rules/ai-behavior.md))
-- **Formatting** - Markdown formatting and privacy guidelines ([`rules/formatting.md`](rules/formatting.md))
-- **Workflow** - Git completion requirements and workflow enforcement ([`rules/workflow.md`](rules/workflow.md))
+
+## Promoted Rules
+
+The following rules have been promoted from this repository to shared instructions after validation:
+
+- **Privacy in Documentation** - Promoted to copilot-instructions (avoid personal names, use generic paths)
+- **Code Completion Requirements** - Promoted to copilot-instructions (commit + push before declaring done)
+- **Code Block Formatting** - Already existed in copilot-instructions (4-space indentation for releases)
