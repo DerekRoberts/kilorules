@@ -1,4 +1,4 @@
-# Documentation Rules
+# Formatting Rules
 
 ## 📝 Markdown & Documentation Formatting
 
