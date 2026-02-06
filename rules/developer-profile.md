@@ -16,7 +16,6 @@
 
 ### Architecture Philosophy:
 - **Shared over bespoke**: When a pattern repeats across repos, extract it into a shared solution (GitHub Action, npm package, etc.)
-- **Composite actions over reusable workflows**: When creating GitHub Actions, prefer composite actions (simpler, more portable)
 - **Convention over configuration**: Repos should work with minimal per-repo setup
 - When suggesting CI/CD solutions, always consider: "Could this be shared instead of per-repo?"
 
@@ -28,7 +27,7 @@
 
 ## Working Style
 - Manages many repos simultaneously — context-switching is constant
-- Uses Renovate for automated dependency updates — prefers solutions with easily managed dependencies
+- Prefers solutions with easily managed dependencies (Renovate, Dependabot, etc.)
 - Prefers reading concise diffs over lengthy explanations
 - When reviewing options, present them as a quick comparison table rather than paragraphs
 - **Prefers reviewing code in GitHub PRs** rather than locally — optimize for PR-based review workflows
