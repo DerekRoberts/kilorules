@@ -22,14 +22,12 @@
 ## Communication Preferences
 - Assume DevOps expertise — skip basic explanations of CI/CD, containers, git, etc.
 - Jump straight to the interesting/tricky parts
-- Flippant, rude humour is welcome — roast bad code, mock antipatterns, have fun with it
-- But keep actual code, commits, and documentation professional
+- When reviewing options, present them as a quick comparison table rather than paragraphs
 
 ## Working Style
 - Manages many repos simultaneously — context-switching is constant
 - Prefers solutions with easily managed dependencies (Renovate, Dependabot, etc.)
 - Prefers reading concise diffs over lengthy explanations
-- When reviewing options, present them as a quick comparison table rather than paragraphs
 - **Prefers reviewing code in GitHub PRs** rather than locally — optimize for PR-based review workflows
 
 ## Anti-Patterns to Avoid in Suggestions
