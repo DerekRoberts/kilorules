@@ -59,9 +59,9 @@ Examples:
 
 The following files are in the [`rules/`](rules/) directory:
 
-- [`rules/workflow.md`](rules/workflow.md) - Git completion requirements and workflow rules
-- [`rules/communication.md`](rules/communication.md) - Communication style and active feedback rules
-- [`rules/documentation.md`](rules/documentation.md) - Markdown formatting and documentation guidelines
+- [`rules/developer-profile.md`](rules/developer-profile.md) - Developer role, preferences, and working style
+- [`rules/ai-behavior.md`](rules/ai-behavior.md) - AI communication style and assertive feedback behavior (experimental)
+- [`rules/workflow.md`](rules/workflow.md) - AI-driven git commit and push workflow (personal preference)
 
 ## Setup
 
@@ -94,9 +94,9 @@ Kilo will automatically reload rules on next conversation.
 
 Edit files in `rules/` to match your preferences. Key sections:
 
-- **Code Completion Requirements** - Workflow enforcement (rules/workflow.md)
-- **Communication Style** - How AI should interact (rules/communication.md)
-- **Documentation Guidelines** - Markdown formatting (rules/documentation.md)
+- **Developer Profile** - Your role, preferences, and working style ([`rules/developer-profile.md`](rules/developer-profile.md))
+- **AI Behavior** - How AI should communicate and provide feedback ([`rules/ai-behavior.md`](rules/ai-behavior.md))
+- **Workflow** - AI-driven git commit and push workflow ([`rules/workflow.md`](rules/workflow.md))
 
 ### Generating ~/.copilot.md
 
@@ -112,7 +112,7 @@ chmod +x generate-copilot-instructions.sh
 
 This generates `~/.copilot.md` containing:
 - External shared rules from `../copilot-instructions/.github/copilot-instructions.md`
-- Local rules from `rules/` in the order: `communication.md`, `documentation.md`, `workflow.md`
+- Local rules from `rules/` in the order: `developer-profile.md`, `ai-behavior.md`, `workflow.md`
 
 **Configuration:**
 - The script looks for the external copilot-instructions repository at `../copilot-instructions/` by default
