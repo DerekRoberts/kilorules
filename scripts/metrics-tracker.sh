@@ -39,9 +39,9 @@ analyze_instructions() {
     lines=$(wc -l < "$file")
     words=$(wc -w < "$file")
     headers=$(grep -c '^## ' "$file" 2>/dev/null || true)
-    must_rules=$(grep -Eic 'MUST|ALWAYS' "$file" 2>/dev/null || true)
-    never_rules=$(grep -ic 'NEVER' "$file" 2>/dev/null || true)
-    soft_rules=$(grep -Eic 'Should|Consider|Prefer|Try' "$file" 2>/dev/null || true)
+    must_rules=$(grep -Eiwc 'MUST|ALWAYS' "$file" 2>/dev/null || true)
+    never_rules=$(grep -iwc 'NEVER' "$file" 2>/dev/null || true)
+    soft_rules=$(grep -Eiwc 'Should|Consider|Prefer|Try' "$file" 2>/dev/null || true)
 
     # Ensure all counts are numeric
     headers=${headers:-0}
@@ -61,17 +61,17 @@ analyze_instructions() {
 
     # Display metrics
     local total_rules=$((must_rules + never_rules))
-    echo "METRIC:                      TARGET:                    VALUE:"
-    printf "  %-26s %-26s %s\n" "Words" "<$words_opt (opt), <$words_warn (warn)" "$words"
-    printf "  %-26s %-26s %s\n" "Sections (##)" "<$sections_opt (opt), <$sections_warn (warn)" "$headers"
-    printf "  %-26s %-26s %s\n" "Hard rules (MUST+NEVER)" "<$rules_opt (opt), <$rules_warn (warn)" "$total_rules"
-    printf "  %-26s %-26s %s\n" "Lines" "informational" "$lines"
-    printf "  %-26s %-26s %s\n" "Soft language" "informational" "$soft_rules"
+    echo "METRIC:                       TARGET:                     VALUE:"
+    printf "  %-27s %-27s %s\n" "Words" "<$words_opt (opt), <$words_warn (warn)" "$words"
+    printf "  %-27s %-27s %s\n" "Sections (##)" "<$sections_opt (opt), <$sections_warn (warn)" "$headers"
+    printf "  %-27s %-27s %s\n" "Hard rules (MUST+NEVER)" "<$rules_opt (opt), <$rules_warn (warn)" "$total_rules"
+    printf "  %-27s %-27s %s\n" "Lines" "informational" "$lines"
+    printf "  %-27s %-27s %s\n" "Soft language" "informational" "$soft_rules"
     echo ""
 
     # Assessment
     echo "ASSESSMENT:"
-    issues=0
+    local issues=0
 
     # Words assessment
     if [[ $words -lt $words_opt ]]; then
