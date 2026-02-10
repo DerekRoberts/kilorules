@@ -14,6 +14,9 @@
 
 set -e
 
+# Enable nullglob so empty globs expand to empty array instead of literal pattern
+shopt -s nullglob
+
 # Check bash version (require 4.0+ for ${var^} capitalization)
 if ((BASH_VERSINFO[0] < 4)); then
     echo "Error: This script requires bash 4.0 or later (current: ${BASH_VERSION})" >&2
@@ -65,8 +68,10 @@ fi
     # Local rules from rules/ directory - dynamically discover all .md files
     echo "## Local Rules"
     echo ""
+    local rule_count=0
     for rule_file in "${LOCAL_RULES_DIR}"/*.md; do
         if [[ -f "$rule_file" ]]; then
+            ((rule_count++))
             # Get base filename without path and extension
             rule_name=$(basename "$rule_file" .md)
             # Capitalize first letter for title
@@ -79,6 +84,10 @@ fi
             echo ""
         fi
     done
+
+    if [[ $rule_count -eq 0 ]]; then
+        echo "Warning: No rule files found in ${LOCAL_RULES_DIR}" >&2
+    fi
 
     echo "---"
     echo ""
