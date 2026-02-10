@@ -70,7 +70,7 @@ fi
             # Get base filename without path and extension
             rule_name=$(basename "$rule_file" .md)
             # Capitalize first letter for title
-            rule_title=$(echo "${rule_name:0:1}" | tr '[:lower:]' '[:upper:]')${rule_name:1}
+            rule_title="${rule_name^}"
             echo "### ${rule_title} Rules"
             echo ""
             # Skip the first markdown title line (format: "# Title")

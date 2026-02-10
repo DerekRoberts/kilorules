@@ -28,11 +28,11 @@ analyze_instructions() {
     words=$(wc -w < "$file")
     headers=$(grep -c '^##' "$file" 2>/dev/null || true)
     # MUST rules: Clear required practices
-    must_rules=$(grep -c 'MUST\|ALWAYS' "$file" 2>/dev/null || true)
+    must_rules=$(grep -Eic 'MUST|ALWAYS' "$file" 2>/dev/null || true)
     # NEVER rules: Clear prohibited actions
-    never_rules=$(grep -c 'NEVER' "$file" 2>/dev/null || true)
+    never_rules=$(grep -ic 'NEVER' "$file" 2>/dev/null || true)
     # UNCLEAR rules: Ambiguous guidance that needs clarification
-    unclear_rules=$(grep -c 'Should\|Consider\|Prefer\|Try' "$file" 2>/dev/null || true)
+    unclear_rules=$(grep -Eic 'Should|Consider|Prefer|Try' "$file" 2>/dev/null || true)
 
     # Ensure all counts are numeric (grep -c outputs 0 when no matches, but exits with code 1)
     headers=${headers:-0}
