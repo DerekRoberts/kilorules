@@ -59,11 +59,12 @@ LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
     fi
 
     # Local rules from rules/ directory - dynamically discover all .md files
+    # Skip symlinks (e.g. copilot-instructions.md) to avoid duplication with external rules
     echo "## Local Rules"
     echo ""
     rule_count=0
     for rule_file in "${LOCAL_RULES_DIR}"/*.md; do
-        if [[ -f "$rule_file" ]]; then
+        if [[ -f "$rule_file" && ! -L "$rule_file" ]]; then
             ((rule_count++)) || true
             # Get base filename without path and extension
             rule_name=$(basename "$rule_file" .md)
