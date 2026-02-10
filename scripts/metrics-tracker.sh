@@ -40,8 +40,8 @@ analyze_instructions() {
     never_rules=${never_rules:-0}
     unclear_rules=${unclear_rules:-0}
 
-    # Guidelines for a comprehensive shared instructions file
-    # These are loose targets - adjust based on your specific needs
+    # Target thresholds for metrics
+    # TODO: Research-based targets needed - these are placeholders
     local lines_target_min=150 lines_target_max=500
     local sections_target_min=10 sections_target_max=50
     local must_rules_target_max=25
