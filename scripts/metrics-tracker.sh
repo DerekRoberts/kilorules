@@ -70,17 +70,17 @@ analyze_instructions() {
 
     # Assessment
     echo "ASSESSMENT:"
-    local issues=0
+    issues=0
 
     # Lines assessment
     if [[ $lines -lt $lines_warn_min ]]; then
         echo "  ✅ Lines: Optimal (<$lines_warn_min)"
     elif [[ $lines -le $lines_warn_max ]]; then
         echo "  ⚠️  Lines: Acceptable ($lines lines)"
-        ((issues++))
+        issues=$((issues + 1))
     else
         echo "  ❌ Lines: Consider splitting (> $lines_warn_max lines)"
-        ((issues++))
+        issues=$((issues + 1))
     fi
 
     # Words assessment
@@ -88,10 +88,10 @@ analyze_instructions() {
         echo "  ✅ Words: Optimal (<$words_warn_min)"
     elif [[ $words -le $words_warn_max ]]; then
         echo "  ⚠️  Words: Acceptable ($words words)"
-        ((issues++))
+        issues=$((issues + 1))
     else
         echo "  ❌ Words: Consider splitting (> $words_warn_max words)"
-        ((issues++))
+        issues=$((issues + 1))
     fi
 
     # Sections assessment
@@ -99,7 +99,7 @@ analyze_instructions() {
         echo "  ✅ Sections: Well-organized (<$sections_warn)"
     else
         echo "  ⚠️  Sections: Many sections ($headers - consider consolidation)"
-        ((issues++))
+        issues=$((issues + 1))
     fi
 
     # Rules assessment
@@ -108,7 +108,7 @@ analyze_instructions() {
         echo "  ✅ Rules: Reasonable count (<$rules_warn)"
     else
         echo "  ⚠️  Rules: High count ($total_rules - prioritize essential only)"
-        ((issues++))
+        issues=$((issues + 1))
     fi
 
     # UNCLEAR assessment
@@ -116,7 +116,7 @@ analyze_instructions() {
         echo "  ✅ UNCLEAR: None (clear guardrails)"
     else
         echo "  ❌ UNCLEAR: $unclear_rules found (reword: use MUST/NEVER)"
-        ((issues++))
+        issues=$((issues + 1))
     fi
 
     echo ""
