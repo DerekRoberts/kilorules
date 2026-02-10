@@ -32,17 +32,10 @@ COPILOT_INSTRUCTIONS_DIR="${COPILOT_INSTRUCTIONS_DIR:-${SCRIPT_DIR}/../copilot-i
 EXTERNAL_FILE="${COPILOT_INSTRUCTIONS_DIR}/.github/copilot-instructions.md"
 LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
 
-# Backup and confirmation for existing file
-if [[ -f "$OUTPUT_FILE" ]]; then
-    read -p "$OUTPUT_FILE already exists. Overwrite? (y/n) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "Aborted."
-        exit 1
-    fi
-    cp "$OUTPUT_FILE" "${OUTPUT_FILE}.backup"
-    echo "Backup created: ${OUTPUT_FILE}.backup" >&2
-fi
+# Rules directories
+COPILOT_INSTRUCTIONS_DIR="${COPILOT_INSTRUCTIONS_DIR:-${SCRIPT_DIR}/../copilot-instructions}"
+EXTERNAL_FILE="${COPILOT_INSTRUCTIONS_DIR}/.github/copilot-instructions.md"
+LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
 
 {
     echo "# Copilot Instructions"
