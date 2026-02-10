@@ -1,6 +1,12 @@
 #!/bin/bash
 # Metrics Tracker - Analyze copilot-instructions.md complexity
 # Reports metrics with context and guidelines
+#
+# Usage:
+#   ./metrics-tracker.sh              # Analyze ~/.copilot.md (informational only)
+#   ./metrics-tracker.sh --strict     # Analyze ~/.copilot.md (fail if thresholds exceeded)
+#   ./metrics-tracker.sh file.md      # Analyze custom file (informational only)
+#   ./metrics-tracker.sh file.md --strict  # Analyze custom file (fail if thresholds exceeded)
 
 set -euo pipefail
 
@@ -56,14 +62,17 @@ analyze_instructions() {
     # Assessment
     echo "ASSESSMENT:"
     local status_good=0
+    local status_failed=0
     
     if [[ $lines -ge $lines_target_min && $lines -le $lines_target_max ]]; then
         echo "  ✅ Lines: Within healthy range"
         status_good=$((status_good + 1))
     elif [[ $lines -lt $lines_target_min ]]; then
         echo "  ℹ️  Lines: Below target (more detail may be needed)"
+        [[ $strict_mode == true ]] && status_failed=$((status_failed + 1))
     else
         echo "  ⚠️  Lines: Above target (consider breaking into narrower focus)"
+        [[ $strict_mode == true ]] && status_failed=$((status_failed + 1))
     fi
 
     if [[ $headers -ge $sections_target_min && $headers -le $sections_target_max ]]; then
@@ -71,8 +80,10 @@ analyze_instructions() {
         status_good=$((status_good + 1))
     elif [[ $headers -lt $sections_target_min ]]; then
         echo "  ℹ️  Sections: Few sections (may need better organization)"
+        [[ $strict_mode == true ]] && status_failed=$((status_failed + 1))
     else
         echo "  ⚠️  Sections: Many sections (consider consolidation or splitting)"
+        [[ $strict_mode == true ]] && status_failed=$((status_failed + 1))
     fi
 
     if [[ $must_rules -lt $must_rules_target_max ]]; then
@@ -80,6 +91,7 @@ analyze_instructions() {
         status_good=$((status_good + 1))
     else
         echo "  ⚠️  MUST rules: Many required rules (ensure each is essential)"
+        [[ $strict_mode == true ]] && status_failed=$((status_failed + 1))
     fi
 
     if [[ $never_rules -lt $never_rules_target_max ]]; then
@@ -87,6 +99,7 @@ analyze_instructions() {
         status_good=$((status_good + 1))
     else
         echo "  ⚠️  NEVER rules: Many prohibitions (clarify priorities)"
+        [[ $strict_mode == true ]] && status_failed=$((status_failed + 1))
     fi
 
     if [[ $unclear_rules -le $unclear_rules_target_max ]]; then
@@ -94,6 +107,7 @@ analyze_instructions() {
         status_good=$((status_good + 1))
     else
         echo "  ⚠️  UNCLEAR rules: $unclear_rules found (reword for clarity: use MUST or NEVER)"
+        [[ $strict_mode == true ]] && status_failed=$((status_failed + 1))
     fi
 
     echo ""
@@ -105,24 +119,42 @@ analyze_instructions() {
         echo "📈 Overall: Review guideline wording for clarity"
     fi
     echo ""
+
+    # Exit with status based on strict mode and results
+    if [[ $strict_mode == true && $status_failed -gt 0 ]]; then
+        echo "❌ Strict mode: $status_failed metric(s) exceeded thresholds" >&2
+        exit 1
+    fi
 }
 
 # Main execution
 readonly DEFAULT_INSTRUCTIONS="$HOME/.copilot.md"
 
-# Handle help flag
+# Handle help/strict flags
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-    echo "Usage: $0 [file]"
+    echo "Usage: $0 [--strict] [file]"
     echo ""
     echo "Analyze copilot instructions for guardrails clarity."
     echo ""
     echo "Arguments:"
-    echo "  file    Path to instructions file (default: $DEFAULT_INSTRUCTIONS)"
+    echo "  --strict   Exit with non-zero status if metrics exceed thresholds"
+    echo "  file       Path to instructions file (default: $DEFAULT_INSTRUCTIONS)"
     echo ""
     echo "Examples:"
-    echo "  $0                          # Analyze default file"
-    echo "  $0 custom/instructions.md   # Analyze custom file"
+    echo "  $0                          # Analyze default file (informational)"
+    echo "  $0 --strict                 # Fail if thresholds exceeded"
+    echo "  $0 custom/instructions.md   # Analyze custom file (informational)"
+    echo "  $0 custom/instructions.md --strict  # Analyze and fail if needed"
     exit 0
+fi
+
+# Check for strict mode (can be first or last argument)
+local strict_mode=false
+if [[ "${1:-}" == "--strict" ]]; then
+    strict_mode=true
+    shift
+elif [[ "${2:-}" == "--strict" ]]; then
+    strict_mode=true
 fi
 
 # Validate argument count
