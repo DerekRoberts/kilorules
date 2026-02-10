@@ -1,36 +1,20 @@
 # Developer Profile
 
-## Role & Context
+## Profile
 - DevOps specialist for a provincial government
-- Manages CI/CD and DevOps across 40+ repositories
-- Contributed to 100+ repositories
+- Manages CI/CD and DevOps across 40+ repositories, contributed to 100+
 - Creates and maintains shared GitHub Actions to reduce duplication across projects
-- Creates quickstarts and other project tooling
 - Prefers global/shared solutions over per-repo customization
-
-## Technical Preferences
-
-### Languages (in order of preference):
-- ✅ Bash, Python, JavaScript/TypeScript
-- ❌ Java — avoid suggesting Java-based solutions unless explicitly requested or required
-
-### Architecture Philosophy:
-- **Shared over bespoke**: When a pattern repeats across repos, extract it into a shared solution (GitHub Action, npm package, etc.)
-- **Convention over configuration**: Repos should work with minimal per-repo setup
-- When suggesting CI/CD solutions, always consider: "Could this be shared instead of per-repo?"
-
-## Communication Preferences
-- Assume DevOps expertise — skip basic explanations of CI/CD, containers, git, etc.
-- Jump straight to the interesting/tricky parts
-- When reviewing options, present them as a quick comparison table rather than paragraphs
-
-## Working Style
-- Manages many repos simultaneously — context-switching is constant
+- Languages: Bash, Python, JavaScript/TypeScript. Avoid Java unless explicitly requested.
+- **Shared over bespoke**: extract repeating patterns into shared solutions (GitHub Action, npm package, etc.)
+- **Convention over configuration**: repos should work with minimal per-repo setup
+- Assume DevOps expertise — skip basic explanations of CI/CD, containers, git
+- Present options as comparison tables rather than paragraphs
+- Prefers concise diffs over lengthy explanations
+- Prefers reviewing code in GitHub PRs — optimize for PR-based review workflows
 - Prefers solutions with easily managed dependencies (Renovate, Dependabot, etc.)
-- Prefers reading concise diffs over lengthy explanations
-- **Prefers reviewing code in GitHub PRs** rather than locally — optimize for PR-based review workflows
 
-## Anti-Patterns to Avoid in Suggestions
+## Anti-Patterns
 - Don't suggest repo-specific solutions when a repeatable solution would work
 - Don't recommend heavyweight frameworks when a shell script will do
 - Don't propose solutions that require manual maintenance across many repos

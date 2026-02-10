@@ -60,7 +60,7 @@ Examples:
 The following files are in the [`rules/`](rules/) directory:
 
 - [`rules/developer-profile.md`](rules/developer-profile.md) - Developer role, preferences, and working style
-- [`rules/ai-behavior.md`](rules/ai-behavior.md) - AI communication style and assertive feedback behavior (experimental)
+- [`rules/ai-behavior.md`](rules/ai-behavior.md) - AI communication style and assertive feedback behavior
 - [`rules/workflow.md`](rules/workflow.md) - AI-driven git commit and push workflow (personal preference)
 
 ## Setup
@@ -112,14 +112,13 @@ chmod +x generate-copilot-instructions.sh
 
 This generates `~/.copilot.md` containing:
 - External shared rules from `../copilot-instructions/.github/copilot-instructions.md`
-- Local rules from `rules/` in the order: `developer-profile.md`, `ai-behavior.md`, `workflow.md`
+- Local rules in priority order (first rules carry most weight): `workflow.md`, `developer-profile.md`, `ai-behavior.md`
 
 **Configuration:**
 - The script looks for the external copilot-instructions repository at `../copilot-instructions/` by default
 - Override this path by setting the `COPILOT_INSTRUCTIONS_DIR` environment variable
-- The order of rules in the output is hardcoded; new rule files added to `rules/` will not be automatically included - update the script's rule loop to add them
+- Rule order is explicit in the `RULE_ORDER` array; new rule files must be added to this array
 
 **Important Notes:**
-- The script creates a backup of the existing `~/.copilot.md` before overwriting it
 - Run this script after updating any rules to regenerate the aggregated file
 - Warnings during generation are written to stderr so they don't appear in the generated output file

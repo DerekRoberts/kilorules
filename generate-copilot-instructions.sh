@@ -58,24 +58,24 @@ LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
         echo "Warning: External file not found at $EXTERNAL_FILE" >&2
     fi
 
-    # Local rules from rules/ directory - dynamically discover all .md files
-    # Skip symlinks (e.g. copilot-instructions.md) to avoid duplication with external rules
+    # Local rules in priority order (first rules carry most weight)
+    # Order: workflow (safety) > developer-profile (context) > ai-behavior (style)
     echo "## Local Rules"
     echo ""
     rule_count=0
-    for rule_file in "${LOCAL_RULES_DIR}"/*.md; do
-        if [[ -f "$rule_file" && ! -L "$rule_file" ]]; then
+    RULE_ORDER=(workflow developer-profile ai-behavior)
+    for rule_name in "${RULE_ORDER[@]}"; do
+        rule_file="${LOCAL_RULES_DIR}/${rule_name}.md"
+        if [[ -f "$rule_file" ]]; then
             ((rule_count++)) || true
-            # Get base filename without path and extension
-            rule_name=$(basename "$rule_file" .md)
-            # Capitalize first letter for title
             rule_title="${rule_name^}"
             echo "### ${rule_title} Rules"
             echo ""
             # Skip the first markdown title line (format: "# Title")
-            # This assumes each rule file starts with a level-1 heading on line 1
             awk 'NR > 1' "$rule_file"
             echo ""
+        else
+            echo "Warning: Rule file not found: $rule_file" >&2
         fi
     done
 
