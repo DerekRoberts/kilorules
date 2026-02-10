@@ -41,11 +41,12 @@ analyze_instructions() {
     unclear_rules=${unclear_rules:-0}
 
     # Guidelines for a comprehensive shared instructions file
-    local lines_target_min=150 lines_target_max=350
-    local sections_target_min=10 sections_target_max=30
-    local must_rules_target_max=20
-    local never_rules_target_max=10
-    local unclear_rules_target_max=0
+    # These are loose targets - adjust based on your specific needs
+    local lines_target_min=150 lines_target_max=500
+    local sections_target_min=10 sections_target_max=50
+    local must_rules_target_max=25
+    local never_rules_target_max=15
+    local unclear_rules_target_max=20
 
     # Display metrics with context in three columns
     echo "CURRENT:"
