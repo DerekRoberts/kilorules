@@ -1,14 +1,14 @@
 #!/bin/bash
-# Metrics Tracker - Analyze copilot-instructions.md complexity
-# Reports metrics with research-backed thresholds
+# Metrics Tracker - Analyze AI instruction file complexity
+# Reports metrics with practitioner-informed thresholds
 #
-# References:
-# - https://www.geeksforgeeks.org/git/prompt-engineering-tips-with-github-copilot/
-# - Perplexity research (2025):
-#   - Aim for ~1,000 words (50-80 short bullets or 20-30 detailed bullets)
-#   - If >60 lines, split into sections or separate files
-#   - First 5-10 rules carry most weight
-#   - Longer prompts improve performance up to practical limits
+# Threshold rationale:
+# - No rigorous published research exists on optimal system prompt length
+# - OpenAI/Anthropic docs: structured prompts with headers tolerate more length
+# - Practitioner consensus: ~500-1500 words sweet spot, >2500 dilutes signal
+# - First 5-10 rules carry disproportionate weight (ordering matters)
+# - Structure and specificity matter more than raw word count
+# - Hard rules (MUST/NEVER) compete for attention; soft language (Prefer) is valid
 #
 # Usage:
 #   ./metrics-tracker.sh [file]
@@ -35,99 +35,84 @@ analyze_instructions() {
     echo ""
 
     # Get basic metrics
-    local lines words headers must_rules never_rules unclear_rules
+    local lines words headers must_rules never_rules soft_rules
     lines=$(wc -l < "$file")
     words=$(wc -w < "$file")
-    headers=$(grep -c '^##' "$file" 2>/dev/null || true)
-    must_rules=$(grep -Eic 'MUST|ALWAYS' "$file" 2>/dev/null || true)
-    never_rules=$(grep -ic 'NEVER' "$file" 2>/dev/null || true)
-    unclear_rules=$(grep -Eic 'Should|Consider|Prefer|Try' "$file" 2>/dev/null || true)
+    headers=$(grep -c '^## ' "$file" 2>/dev/null || true)
+    must_rules=$(grep -Eiwc 'MUST|ALWAYS' "$file" 2>/dev/null || true)
+    never_rules=$(grep -iwc 'NEVER' "$file" 2>/dev/null || true)
+    soft_rules=$(grep -Eiwc 'Should|Consider|Prefer|Try' "$file" 2>/dev/null || true)
 
     # Ensure all counts are numeric
     headers=${headers:-0}
     must_rules=${must_rules:-0}
     never_rules=${never_rules:-0}
-    unclear_rules=${unclear_rules:-0}
+    soft_rules=${soft_rules:-0}
 
-    # Research-backed thresholds
-    # Lines: <60 optimal, 60-100 warning, >100 split needed
-    # Words: <1000 optimal, 1000-2000 warning, >2000 split needed
-    # Sections: <10 optimal, 10-20 warning, >20 consolidate
-    # Rules (MUST+NEVER): <30 based on 20-30 detailed bullets
-    # UNCLEAR: 0 optimal - reword for clarity
-    local lines_warn_min=60 lines_warn_max=100
-    local words_warn_min=1000 words_warn_max=2000
-    local sections_warn=20
-    local rules_warn=30
-    local unclear_warn=0
+    # Thresholds
+    # Words: <1500 optimal, 1500-2500 acceptable, >2500 action needed
+    # Sections: <15 optimal, 15-25 acceptable, >25 consolidate
+    # Hard rules (MUST+NEVER): <20 optimal, 20-35 acceptable, >35 action needed
+    # Lines: informational only (code blocks skew line counts)
+    # Soft language: informational only (Prefer/Consider are valid for preferences)
+    local words_opt=1500 words_warn=2500
+    local sections_opt=15 sections_warn=25
+    local rules_opt=20 rules_warn=35
 
-    # Display metrics with pass/fail
-    echo "CURRENT:                     TARGET:                    VALUE:"
-    printf "  %-26s %-23s %s\n" "Lines" "<$lines_warn_min (opt), <$lines_warn_max (warn)" "$lines"
-    printf "  %-26s %-23s %s\n" "Words" "<$words_warn_min (opt), <$words_warn_max (warn)" "$words"
-    printf "  %-26s %-23s %s\n" "Sections" "<$sections_warn" "$headers"
-    printf "  %-26s %-23s %s\n" "Rules (MUST+NEVER)" "<$rules_warn" "$((must_rules + never_rules))"
-    printf "  %-26s %-23s %s\n" "UNCLEAR" "$unclear_warn" "$unclear_rules"
+    # Display metrics
+    local total_rules=$((must_rules + never_rules))
+    echo "METRIC:                       TARGET:                     VALUE:"
+    printf "  %-27s %-27s %s\n" "Words" "<$words_opt (opt), <$words_warn (warn)" "$words"
+    printf "  %-27s %-27s %s\n" "Sections (##)" "<$sections_opt (opt), <$sections_warn (warn)" "$headers"
+    printf "  %-27s %-27s %s\n" "Hard rules (MUST+NEVER)" "<$rules_opt (opt), <$rules_warn (warn)" "$total_rules"
+    printf "  %-27s %-27s %s\n" "Lines" "informational" "$lines"
+    printf "  %-27s %-27s %s\n" "Soft language" "informational" "$soft_rules"
     echo ""
 
     # Assessment
     echo "ASSESSMENT:"
-    issues=0
-
-    # Lines assessment
-    if [[ $lines -lt $lines_warn_min ]]; then
-        echo "  ✅ Lines: Optimal (<$lines_warn_min)"
-    elif [[ $lines -le $lines_warn_max ]]; then
-        echo "  ⚠️  Lines: Acceptable ($lines lines)"
-        issues=$((issues + 1))
-    else
-        echo "  ❌ Lines: Consider splitting (> $lines_warn_max lines)"
-        issues=$((issues + 1))
-    fi
+    local issues=0
 
     # Words assessment
-    if [[ $words -lt $words_warn_min ]]; then
-        echo "  ✅ Words: Optimal (<$words_warn_min)"
-    elif [[ $words -le $words_warn_max ]]; then
+    if [[ $words -lt $words_opt ]]; then
+        echo "  ✅ Words: Optimal (<$words_opt)"
+    elif [[ $words -le $words_warn ]]; then
         echo "  ⚠️  Words: Acceptable ($words words)"
         issues=$((issues + 1))
     else
-        echo "  ❌ Words: Consider splitting (> $words_warn_max words)"
+        echo "  ❌ Words: Too long ($words words, target <$words_warn)"
         issues=$((issues + 1))
     fi
 
     # Sections assessment
-    if [[ $headers -lt $sections_warn ]]; then
-        echo "  ✅ Sections: Well-organized (<$sections_warn)"
+    if [[ $headers -lt $sections_opt ]]; then
+        echo "  ✅ Sections: Well-organized (<$sections_opt)"
+    elif [[ $headers -le $sections_warn ]]; then
+        echo "  ⚠️  Sections: Acceptable ($headers sections)"
+        issues=$((issues + 1))
     else
-        echo "  ⚠️  Sections: Many sections ($headers - consider consolidation)"
+        echo "  ❌ Sections: Too many ($headers - consolidate)"
         issues=$((issues + 1))
     fi
 
-    # Rules assessment
-    local total_rules=$((must_rules + never_rules))
-    if [[ $total_rules -lt $rules_warn ]]; then
-        echo "  ✅ Rules: Reasonable count (<$rules_warn)"
-    else
-        echo "  ⚠️  Rules: High count ($total_rules - prioritize essential only)"
+    # Hard rules assessment
+    if [[ $total_rules -lt $rules_opt ]]; then
+        echo "  ✅ Hard rules: Optimal (<$rules_opt)"
+    elif [[ $total_rules -le $rules_warn ]]; then
+        echo "  ⚠️  Hard rules: Acceptable ($total_rules rules)"
         issues=$((issues + 1))
-    fi
-
-    # UNCLEAR assessment
-    if [[ $unclear_rules -eq 0 ]]; then
-        echo "  ✅ UNCLEAR: None (clear guardrails)"
     else
-        echo "  ❌ UNCLEAR: $unclear_rules found (reword: use MUST/NEVER)"
+        echo "  ❌ Hard rules: Too many ($total_rules - prioritize essential only)"
         issues=$((issues + 1))
     fi
 
     echo ""
     if [[ $issues -eq 0 ]]; then
-        echo "📈 Overall: Clear, enforceable guardrails"
+        echo "📈 Overall: Clear, well-structured instructions"
     elif [[ $issues -le 2 ]]; then
         echo "📈 Overall: Minor issues - review flagged items"
     else
-        echo "📈 Overall: Significant issues - consider restructuring"
+        echo "📈 Overall: Needs attention - consider restructuring"
     fi
     echo ""
 }
@@ -139,7 +124,7 @@ readonly DEFAULT_INSTRUCTIONS="$HOME/.copilot.md"
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
     echo "Usage: $0 [file]"
     echo ""
-    echo "Analyze copilot instructions with research-backed thresholds."
+    echo "Analyze AI instruction file complexity with practitioner-informed thresholds."
     echo ""
     echo "Arguments:"
     echo "  file    Path to instructions file (default: $DEFAULT_INSTRUCTIONS)"
