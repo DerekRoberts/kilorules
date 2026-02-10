@@ -68,7 +68,7 @@ fi
     # Local rules from rules/ directory - dynamically discover all .md files
     echo "## Local Rules"
     echo ""
-    local rule_count=0
+    rule_count=0
     for rule_file in "${LOCAL_RULES_DIR}"/*.md; do
         if [[ -f "$rule_file" ]]; then
             ((rule_count++))
