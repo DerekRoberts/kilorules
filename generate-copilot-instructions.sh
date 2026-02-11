@@ -87,13 +87,13 @@ LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
     echo ""
     echo "_Generated at $(date -u +'%Y-%m-%dT%H:%M:%SZ')_"
 
+} > "$OUTPUT_FILE"
+
 if [[ -f "$OUTPUT_FILE" ]]; then
     echo "Updating: $OUTPUT_FILE"
 else
     echo "Creating: $OUTPUT_FILE"
 fi
-
-} > "$OUTPUT_FILE"
 
 echo "Done: $OUTPUT_FILE"
 
