@@ -36,9 +36,7 @@ analyze_instructions() {
 
     # Get basic metrics
     local lines words chars headers must_rules never_rules soft_rules
-    lines=$(wc -l < "$file")
-    words=$(wc -w < "$file")
-    chars=$(wc -m < "$file")
+    read -r lines words chars < <(wc -lwm < "$file")
     headers=$(grep -c '^## ' "$file" 2>/dev/null || true)
     must_rules=$(grep -Eiwc 'MUST|ALWAYS' "$file" 2>/dev/null || true)
     never_rules=$(grep -iwc 'NEVER' "$file" 2>/dev/null || true)
