@@ -90,12 +90,10 @@ LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
 } > "$OUTPUT_FILE"
 
 if [[ -f "$OUTPUT_FILE" ]]; then
-    echo "Updating: $OUTPUT_FILE"
+    echo "Updated: $OUTPUT_FILE"
 else
-    echo "Creating: $OUTPUT_FILE"
+    echo "Created: $OUTPUT_FILE"
 fi
-
-echo "Done: $OUTPUT_FILE"
 
 # Run metrics analysis on combined output (Kilo + Copilot rules)
 echo ""
