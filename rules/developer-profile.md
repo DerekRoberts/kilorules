@@ -1,13 +1,7 @@
 # Developer Profile
 
-## Context
-- DevOps specialist for a provincial government
-- Manages CI/CD across 40+ repositories
-
 ## Technical Preferences
 - **Languages**: Bash, Python, JavaScript/TypeScript
-- **NEVER suggest Java-based tools** (Maven, Gradle) unless explicitly requested
-- **ALWAYS prefer shell scripts** over heavyweight frameworks
 - **ALWAYS check for existing solutions** (GitHub Marketplace, npmjs.com) before creating custom ones
 
 ## Architecture Principles
