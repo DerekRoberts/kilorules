@@ -10,7 +10,7 @@ Personal GitHub Copilot instructions combining shared BCGov standards with perso
 - Shared BCGov team standards from `../copilot-instructions/.github/copilot-instructions.md`
 - Personal preferences from all `*.md` files in `rules/`
 
-Output: `~/.copilot.md` (read by GitHub Copilot)
+Output: `~/.copilot.md` (used globally by Copilot, Kilo Code, and Cursor via symlinks)
 
 ## Usage
 
