@@ -26,10 +26,10 @@ Other tools like Kilo Code and Cursor can use the generated instructions via sym
 
 ```bash
 # Kilo Code
-mkdir -p ~/.kilocode && ln -sf ~/.copilot.md ~/.kilocode/copilot-instructions.md
+mkdir -p ~/.kilocode && ln -sf ~/.copilot.md ~/.kilocode/copilot-extras.md
 
 # Cursor
-mkdir -p ~/.cursor && ln -sf ~/.copilot.md ~/.cursor/copilot-instructions.md
+mkdir -p ~/.cursor && ln -sf ~/.copilot.md ~/.cursor/copilot-extras.md
 ```
 
 ## Structure
