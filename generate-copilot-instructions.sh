@@ -18,11 +18,6 @@ COPILOT_INSTRUCTIONS_DIR="${COPILOT_INSTRUCTIONS_DIR:-${SCRIPT_DIR}/../copilot-i
 EXTERNAL_FILE="${COPILOT_INSTRUCTIONS_DIR}/.github/copilot-instructions.md"
 LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
 
-action="Created"
-if [[ -f "$OUTPUT_FILE" ]]; then
-    action="Updated"
-fi
-
 {
     # External shared rules
     if [[ -f "$EXTERNAL_FILE" ]]; then
@@ -42,8 +37,5 @@ fi
 
 } > "$OUTPUT_FILE"
 
-echo "$action: $OUTPUT_FILE"
-
-# Run metrics analysis on combined output (Kilo + Copilot rules)
-echo ""
+echo "Generated: $OUTPUT_FILE"
 bash "${SCRIPT_DIR}/scripts/metrics-tracker.sh" "$OUTPUT_FILE"

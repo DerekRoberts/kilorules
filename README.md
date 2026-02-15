@@ -1,102 +1,33 @@
 # Kilo Rules
 
-Personal rules and configuration for Kilo Code AI assistant.
+Personal GitHub Copilot instructions combining shared BCGov standards with personal preferences.
 
-## Purpose
+## What it does
 
-These rules configure Kilo's AI assistant behavior to match personal preferences and workflow requirements. They complement shared team standards (like BCGov's copilot-instructions) with personal preferences.
+`generate-copilot-instructions.sh` concatenates:
+- Shared BCGov team standards from `../copilot-instructions/.github/copilot-instructions.md`
+- Personal preferences from `rules/developer-profile.md`
 
-**Why both sets?**
-- `./rules/` = Personal preferences (communication style, workflow requirements, etc.)
-- `https://github.com/bcgov/copilot-instructions/blob/main/.github/copilot-instructions.md` = Shared team/work standards
-- Together they provide complete context: shared standards + personal preferences
+Output: `~/.copilot.md` (read by GitHub Copilot)
 
-### Rule Placement Philosophy
+## Usage
 
-Rules are split between this repository and shared instructions:
+```bash
+./generate-copilot-instructions.sh
+```
 
-#### This Repository (`rules/`)
-
-Contains **personal, experimental, and more assertive** rules:
-
-- **Personal preferences** - Tone, communication style, workflow expectations
-- **Experimental approaches** - New patterns being tested before wider adoption
-- **Strong opinions** - Assertive rules that may differ from standard practices
-- **Project-specific conventions** - Rules unique to your projects
-
-Examples:
-- "Use conversational, informal tone" (personal preference)
-- "Be intrusive and question everything" (assertive style)
-- "A task is NOT complete until committed and pushed" (strong opinion)
-
-#### Shared Instructions
-
-Contains **safe, proven, obvious best practices**:
-
-- **General coding standards** - Language-agnostic best practices
-- **Documentation guidelines** - Standard markdown, code block formatting
-- **Security patterns** - Established security best practices
-- **Well-established conventions** - Widely-accepted patterns
-
-Examples:
-- "Use 4-space indentation for code blocks in release notes"
-- "Never include personal names in documentation"
-- Standard linting rules, formatting conventions
-
-### Promotion Process
-
-1. Test experimental rules in `rules/` first
-2. Once validated and refined, promote to shared instructions
-3. Remove or de-emphasize the promoted rule in this repository
+Displays metrics after generation. Run after editing `rules/developer-profile.md`.
 
 ## Structure
 
-- [`README.md`](README.md) - This file (for humans, not read by Kilo)
-- [`rules/`](rules/) - Directory containing Kilo rule files
-- [`generate-copilot-instructions.sh`](generate-copilot-instructions.sh) - Script to generate `~/.copilot.md`
+- `generate-copilot-instructions.sh` - Generator script
+- `rules/developer-profile.md` - Personal preferences (language prefs, communication style)
+- `scripts/metrics-tracker.sh` - Analyzes generated output complexity
+- `plans/` - Planning documents (not used by Copilot)
 
-### Rule Files
+## Notes
 
-The following files are in the [`rules/`](rules/) directory:
-
-- [`rules/developer-profile.md`](rules/developer-profile.md) - Developer role, preferences, and working style
-- [`rules/ai-behavior.md`](rules/ai-behavior.md) - AI communication style and assertive feedback behavior
-- [`rules/workflow.md`](rules/workflow.md) - AI-driven git commit and push workflow (personal preference)
-
-## Setup
-
-1. **Symlink personal rules:**
-
-```bash
-mkdir -p ~/.kilocode
-ln -sf "$(pwd)/rules" ~/.kilocode/rules
-```
-
-2. **Symlink shared rules (optional):**
-
-```bash
-ln -sf ~/Repos/copilot-instructions/.github/copilot-instructions.md ~/.kilocode/rules/copilot-instructions.md
-```
-
-The first command keeps your personal rules version controlled. The second adds shared team standards.  Make sure to handle machine-specific paths to suit your setup.
-
-## Updates
-
-Pull the latest changes from this repository:
-
-```bash
-git pull
-```
-
-Kilo will automatically reload rules on next conversation.
-
-## Customization
-
-Edit files in `rules/` to match your preferences. Key sections:
-
-- **Developer Profile** - Your role, preferences, and working style ([`rules/developer-profile.md`](rules/developer-profile.md))
-- **AI Behavior** - How AI should communicate and provide feedback ([`rules/ai-behavior.md`](rules/ai-behavior.md))
-- **Workflow** - AI-driven git commit and push workflow ([`rules/workflow.md`](rules/workflow.md))
+`COPILOT_INSTRUCTIONS_DIR` environment variable can override the default `../copilot-instructions` path.
 
 ### Generating ~/.copilot.md
 
