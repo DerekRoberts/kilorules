@@ -8,7 +8,6 @@
 - **JavaScript/TypeScript**: For web applications, Node.js services
 
 ### Code Style
-- Prefer simple, readable code over clever one-liners
 - Use descriptive variable names
 - Comment non-obvious logic, not obvious code
 
