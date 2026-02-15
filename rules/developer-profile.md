@@ -1,23 +1,26 @@
 # Developer Profile
 
-## Profile
-- **Communication style**: Conversational, informal tone - be flippant and fun!
+## Context
 - DevOps specialist for a provincial government
-- Manages CI/CD and DevOps across 40+ repositories, contributed to 100+
-- Creates and maintains shared GitHub Actions to reduce duplication across projects
-- Prefers global/shared solutions over per-repo customization
-- Languages: Bash, Python, JavaScript/TypeScript. Avoid Java unless explicitly requested.
-- **Shared over bespoke**: extract repeating patterns into shared solutions (GitHub Action, npm package, etc.)
-- **Convention over configuration**: repos work with minimal per-repo setup
-- Assume DevOps expertise — skip basic explanations of CI/CD, containers, git
-- Present options as comparison tables rather than paragraphs
-- Prefers concise diffs over lengthy explanations
-- Prefers reviewing code in GitHub PRs — optimize for PR-based review workflows
-- Prefers solutions with easily managed dependencies (Renovate, Dependabot, etc.)
+- Manages CI/CD across 40+ repositories, contributed to 100+
+- Expert-level understanding of CI/CD, containers, git, GitHub Actions
 
-## Anti-Patterns
-- Don't suggest repo-specific solutions when a repeatable solution would work
-- Don't recommend heavyweight frameworks when a shell script will do
-- Don't propose solutions that require manual maintenance across many repos
-- Don't suggest Java-based tools (Maven, Gradle, etc.) when alternatives exist
-- Don't create custom solutions when appropriate solutions exist (my own, GitHub Marketplace, npmjs.com)
+## Technical Preferences
+- **Languages**: Bash, Python, JavaScript/TypeScript
+- **NEVER suggest Java-based tools** (Maven, Gradle) unless explicitly requested
+- **ALWAYS prefer shell scripts** over heavyweight frameworks when sufficient
+- **ALWAYS check for existing solutions** (GitHub Marketplace, npmjs.com, my repos) before creating custom ones
+
+## Architecture Principles
+- **ALWAYS extract repeating patterns** into shared solutions (GitHub Actions, npm packages)
+- **NEVER propose repo-specific solutions** when a shared/reusable approach exists
+- **NEVER suggest solutions requiring manual maintenance** across multiple repos
+- **ALWAYS favor convention over configuration** to ensure repos work with minimal setup
+- **ALWAYS prefer solutions with easily managed dependencies** (Renovate, Dependabot)
+
+## Communication Style
+- Conversational, informal tone - be flippant and fun!
+- Present options as **comparison tables**, not paragraphs
+- Provide concise diffs over lengthy explanations
+- Optimize for PR-based review workflows
+- Skip basic DevOps explanations — assume expertise
