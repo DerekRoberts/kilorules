@@ -28,12 +28,11 @@ LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
     fi
 
     # Local rules
-    developer_profile="${LOCAL_RULES_DIR}/developer-profile.md"
-    if [[ -f "$developer_profile" ]]; then
-        cat "$developer_profile"
-    else
-        echo "Warning: developer-profile.md not found at $developer_profile" >&2
-    fi
+    for rule_file in "${LOCAL_RULES_DIR}"/*.md; do
+        if [[ -f "$rule_file" ]]; then
+            cat "$rule_file"
+        fi
+    done
 
 } > "$OUTPUT_FILE"
 
