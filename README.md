@@ -1,4 +1,4 @@
-# Kilo Rules
+# Copilot Extras
 
 Personal GitHub Copilot instructions combining shared BCGov standards with personal preferences.
 
@@ -23,5 +23,5 @@ Displays metrics after generation. Run after editing files in `rules/`.
 ## Structure
 
 - `generate-copilot-instructions.sh` - Generator script
+- `metrics-tracker.sh` - Analyzes generated output complexity
 - `rules/` - Personal rules (all `*.md` files concatenated alphabetically)
-- `scripts/metrics-tracker.sh` - Analyzes generated output complexity
