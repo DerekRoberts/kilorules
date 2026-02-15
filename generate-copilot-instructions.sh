@@ -39,5 +39,4 @@ LOCAL_RULES_DIR="${SCRIPT_DIR}/rules"
 
 } > "$OUTPUT_FILE"
 
-echo "Generated: $OUTPUT_FILE"
 bash "${SCRIPT_DIR}/metrics-tracker.sh" "$OUTPUT_FILE"
