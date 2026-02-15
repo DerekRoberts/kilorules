@@ -7,10 +7,6 @@
 - **Python**: For data processing, automation, API integrations
 - **JavaScript/TypeScript**: For web applications, Node.js services
 
-### Code Style
-- Use descriptive variable names
-- Comment non-obvious logic, not obvious code
-
 ### Architecture & Patterns
 - Favor configuration over hardcoding
 - Environment variables for config, committed defaults
